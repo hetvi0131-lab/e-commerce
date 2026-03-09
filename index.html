@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Green Oasis | Plant Nursery</title>
+    
+    <style>
+        :root {
+            --forest-green: #2D5A27;
+            --sage: #A3B18A;
+            --cream: #F8F9F1;
+            --terracotta: #E07A5F;
+            --dark-text: #333;
+            --glass: rgba(255, 255, 255, 0.2);
+            --light-sage: #e8efdf; 
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--cream); 
+            color: var(--dark-text); 
+            scroll-behavior: smooth;
+        }
+
+        /* --- Navbar --- */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 15px 5%; 
+            background: white; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--forest-green); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links li a { text-decoration: none; color: var(--dark-text); font-weight: 500; transition: 0.3s; }
+        .nav-links li a:hover { color: var(--forest-green); }
+        .cart-icon { font-weight: bold; cursor: pointer; color: var(--forest-green); }
+
+        /* --- Hero Section --- */
+        .hero { 
+            height: 60vh; 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://static.vecteezy.com/system/resources/thumbnails/051/791/492/small/a-tranquil-garden-filled-with-vibrant-greenery-showcasing-diverse-plant-life-in-calming-shades-of-green-photo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            color: white;
+        }
+
+        /* --- Popular Section --- */
+        .products-section { padding: 40px 8%; }
+        .products-section h2 { text-align: center; color: var(--forest-green); margin-bottom: 30px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .product-card { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #eee; }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+        .add-btn { background: var(--forest-green); color: white; border: none; padding: 10px; border-radius: 5px; width: 100%; cursor: pointer; margin-top: 10px; }
+
+        /* --- OFFERS SLIDER --- */
+        .slider-container {
+            position: relative;
+            width: min(100%, 1500px);
+            height: 500px;
+            margin: 20px auto 40px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide:nth-child(1) { background-image: linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)), url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1800&q=80'); }
+        .slide:nth-child(2) { background-image: linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)), url('https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1800&q=80'); }
+        .slide:nth-child(3) { background-image: linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)), url('https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=1800&q=80'); }
+
+        .offer-content { text-align: center; color: white; padding: 10px 14px; max-width: 280px; z-index: 5; }
+        .offer-content h2 { font-size: clamp(0.95rem, 2.2vw, 1.2rem); margin: 0 0 8px 0; line-height: 1.2; text-shadow: 0 6px 15px rgba(0,0,0,0.35); }
+        .offer-content p { font-size: clamp(0.68rem, 1.4vw, 0.78rem); margin: 0 auto 10px auto; line-height: 1.4; max-width: 240px; }
+        .offer-btn { padding: 7px 18px; border-radius: 999px; border: 2px solid rgba(255, 255, 255, 0.9); color: #fff; background: rgba(255, 255, 255, 0.05); text-decoration: none; font-weight: 600; font-size: 0.75rem; display: inline-block; transition: all 0.3s ease; }
+        .offer-btn:hover { background: #fff; color: var(--forest-green); transform: translateY(-2px); }
+
+        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.4); border: none; color: white; font-size: 1.2rem; width: 36px; height: 36px; cursor: pointer; z-index: 10; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .slider-arrow:hover { background: var(--forest-green); }
+        .next-offer { right: 15px; }
+        .prev-offer { left: 15px; }
+
+        /* --- CATEGORIES SECTION --- */
+        .categories-section { padding: 40px 8%; text-align: center; }
+        .categories-section h2 { color: var(--forest-green); margin-bottom: 30px; }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .cat-item { background: white; padding: 20px; border-radius: 15px; transition: 0.3s; cursor: pointer; border: 1px solid #eee; }
+        .cat-item:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .cat-item img { width: 100%; max-width: 150px; margin-bottom: 15px; }
+        .cat-item h4 { margin: 0; color: var(--dark-text); }
+
+        /* --- ABOUT/STATS SECTION --- */
+        .about-stats-section { padding: 80px 8%; background-color: var(--light-sage); display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .about-image-container { flex: 1; min-width: 300px; }
+        .about-image-container img { width: 100%; border-radius: 10px; box-shadow: 10px 10px 0px var(--terracotta); }
+        .about-text-container { flex: 1; min-width: 300px; }
+        .about-text-container h2 { font-size: 2.5rem; color: var(--dark-text); margin-bottom: 20px; line-height: 1.2; }
+        .about-text-container p { color: #666; line-height: 1.6; margin-bottom: 30px; }
+        .stats-grid { display: flex; gap: 40px; border-top: 1px solid #ccd5ae; padding-top: 20px; }
+        .stat-box h3 { font-size: 1.8rem; margin: 0; color: var(--dark-text); }
+        .stat-box p { font-size: 0.9rem; margin: 5px 0 0; color: #777; }
+
+        /* --- TESTIMONIALS SECTION (As per image) --- */
+        .testimonials-section {
+            padding: 80px 8%;
+            background-color: var(--light-sage);
+            text-align: left;
+        }
+        .testimonials-header h2 { font-size: 2.2rem; color: var(--dark-text); margin-bottom: 10px; }
+        .testimonials-header p { color: #666; margin-bottom: 40px; }
+        
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            align-items: start;
+        }
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .testimonial-card.large { grid-row: span 2; }
+        .quote-icon { color: var(--forest-green); font-size: 2rem; margin-bottom: 15px; display: block; }
+        .testimonial-text { color: #555; line-height: 1.6; font-style: italic; margin-bottom: 20px; }
+        .client-info { display: flex; align-items: center; gap: 12px; }
+        .client-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+        .client-name { font-weight: bold; color: var(--dark-text); font-size: 0.9rem; }
+
+        .footer { padding: 30px; background: #1a1a1a; color: white; text-align: center; }
+
+        @media (max-width: 768px) {
+            .about-stats-section { text-align: center; }
+            .stats-grid { justify-content: center; }
+            .testimonials-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">🌿 The Green Oasis</a>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#popular">Shop</a></li>
+             <li><a href="#">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Bring Nature Home</h1>
+            <p>Quality plants for your living space.</p>
+        </div>
+    </header>
+
+    <section class="products-section" id="popular">
+        <h2>Popular Plants</h2>
+        <div class="product-grid" id="product-grid"></div>  
+    </section>
+
+    <div class="slider-container">
+        <div class="slider-wrapper" id="offer-wrapper">
+            <div class="slide">
+                <div class="offer-content">
+                    <h2>Flash Sale: Up to 50% Off<br>On Select Items!</h2>
+                    <p>Don't miss our flash sale event. For a limited time, enjoy up to 50% off on best-selling indoor plants.</p>
+                    <a href="#popular" class="offer-btn">Shop Now</a>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="offer-content">
+                    <h2>Weekend Deal: Buy 2<br>Get 1 Free!</h2>
+                    <p>Create your mini garden today. Mix any three succulent pots and pay only for two this weekend.</p>
+                    <a href="#popular" class="offer-btn">Shop Now</a>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="offer-content">
+                    <h2>Care Bundle: Save 30%<br>On Plant Essentials</h2>
+                    <p>Get premium potting mix, organic fertilizer, and care tools together at a special combo price.</p>
+                    <a href="#popular" class="offer-btn">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <button class="slider-arrow prev-offer" onclick="movePrev()">&#10094;</button>
+        <button class="slider-arrow next-offer" onclick="moveNext()">&#10095;</button>
+    </div>
+
+    <section class="categories-section" id="categories">
+        <h2>Our Categories</h2>
+        <div class="categories-grid">
+            <div class="cat-item">
+                <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?w=300" alt="Houseplants">
+                <h4>Houseplants</h4>
+            </div>
+            <div class="cat-item">
+                <img src="https://images.unsplash.com/photo-1584444262846-e2716db1294b?w=300" alt="Outdoor">
+                <h4>Outdoor Plants</h4>
+            </div>
+            <div class="cat-item">
+                <img src="https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?cs=srgb&dl=pexels-julia-kuzenkov-442028-1974508.jpg&fm=jpg" alt="Succulents">
+                <h4>Succulents</h4>
+            </div>
+            <div class="cat-item">
+                <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=300" alt="Desert">
+                <h4>Desert Bloom</h4>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-stats-section">
+        <div class="about-image-container">
+            <img src="https://media.istockphoto.com/id/1268045137/photo/potted-snake-plants-inside-a-beautiful-new-flat-or-apartment.jpg?s=612x612&w=0&k=20&c=UX79enZ3Rn2jX5labxi_u2Y0s4X3lfOPfr_UG91yego=" alt="Urban Jungle">
+        </div>
+        <div class="about-text-container">
+            <h2>Your Premier Destination for All Green.</h2>
+            <p>At Urban Jungle Co., we believe in the transformative power of plants. Whether you're a seasoned gardener or just starting your green journey, our curated selection of plants will inspire and enrich your living space.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3>98%</h3>
+                    <p>Customer Satisfaction</p>
+                </div>
+                <div class="stat-box">
+                    <h3>103K</h3>
+                    <p>Plants Sold</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="testimonials-header">
+            <h2>What Our Customers Say</h2>
+            <p>Discover the reasons why people love us and become your go-to partner.</p>
+        </div>
+        
+        <div class="testimonials-container">
+            <div class="testimonial-card large">
+                <span class="quote-icon">“</span>
+                <p class="testimonial-text">I am absolutely thrilled with the service I received from their company! They were attentive, responsive, and genuinely cared about meeting my needs. I highly recommend them.</p>
+                <div class="client-info">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="client-img">
+                    <span class="client-name">Your Client</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <span class="quote-icon">“</span>
+                <p class="testimonial-text">I am absolutely thrilled with the service I received from their company! They were attentive, responsive, and genuinely cared.</p>
+                <div class="client-info">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="client-img">
+                    <span class="client-name">Your Client</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <span class="quote-icon">“</span>
+                <p class="testimonial-text">Their team exceeded our expectations. Their creative approach and attention to detail brought our vision to life. Highly recommended!</p>
+                <div class="client-info">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="client-img">
+                    <span class="client-name">Your Client</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <p>© 2026 The Green Oasis. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
